@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b0d12">
+  <meta name="description" content="OIO ONE — Sistema de Leitura de Hidrômetros">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%230b84ff'/><text x='50' y='62' font-size='48' text-anchor='middle' fill='white'>O</text></svg>">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="style.css">
+  <title>OIO ONE — Leitura de Hidrômetros</title>
+</head>
+<body>
+  <div id="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand-row">
+        <div>
+          <strong>Rotas</strong>
+          <span>Leitor de campo</span>
+        </div>
+        <span class="online-badge" id="networkBadge"><i data-lucide="wifi"></i> ONLINE</span>
+      </div>
+      <div class="sidebar-actions">
+        <button class="icon-btn" id="menuClose" aria-label="Fechar menu"><i data-lucide="x"></i></button>
+      </div>
+      <div id="routeList" class="route-list"></div>
+    </aside>
+
+    <main class="workspace">
+      <header class="topbar">
+        <button class="icon-btn mobile-only" id="menuOpen" aria-label="Abrir rotas"><i data-lucide="menu"></i></button>
+        <div class="top-title">
+          <strong id="topRouteName">ROTA 1</strong>
+          <span id="topRouteMeta">Selecione uma rota</span>
+        </div>
+        <div class="top-actions">
+          <button class="icon-btn" id="locateBtn" title="Minha localização" aria-label="Minha localização"><i data-lucide="locate-fixed"></i></button>
+          <span class="sync-pill" id="syncBadge"><i data-lucide="check"></i> Offline OK</span>
+        </div>
+      </header>
+
+      <section id="map" aria-label="Mapa em tempo real"></section>
+
+      <section class="route-sheet" id="routeSheet">
+        <div class="sheet-handle"></div>
+        <div class="sheet-head">
+          <div>
+            <strong id="sheetRouteName">ROTA 1</strong>
+            <span id="sheetMeta">0 endereços · 0 salvos</span>
+          </div>
+          <button class="icon-btn" id="sheetToggle" aria-label="Expandir ou recolher"><i data-lucide="chevron-up"></i></button>
+        </div>
+        <div class="progress-row">
+          <div class="progress"><span id="progressBar"></span></div>
+          <strong id="progressText">0/0</strong>
+        </div>
+        <div class="sheet-tools">
+          <label class="search-box"><i data-lucide="search"></i><input id="streetSearch" placeholder="Buscar endereço..."></label>
+          <button class="icon-btn" id="downloadBtn" title="Salvar dados locais" aria-label="Salvar dados locais"><i data-lucide="download"></i></button>
+        </div>
+        <div id="streetGrid" class="street-grid"></div>
+      </section>
+    </main>
+
+    <div class="mobile-overlay" id="overlay"></div>
+    <div class="toast" id="toast" role="status"></div>
+
+    <input id="photoInput" type="file" accept="image/*" capture="environment" hidden>
+    <input id="videoInput" type="file" accept="video/*" capture="environment" hidden>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.js"></script>
+  <script src="data/routes.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
