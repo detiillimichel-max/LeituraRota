@@ -144,6 +144,146 @@ Há uma segunda memória de coordenadas. Ela diverge da memória A em várias ro
 19. [-23.1285,-46.3025],[-23.1270,-46.3020],[-23.1255,-46.3015]
 20. [-23.1375,-46.3085],[-23.1390,-46.3090],[-23.1405,-46.3095]
 
+## Especificação de UX e navegação por rota
+
+### Referência visual
+
+As telas enviadas nesta conversa definem a referência visual do futuro PWA OIO ONE — Sistema de Leitura de Hidrômetros:
+
+- Tela inicial com identidade OIO ONE, subtítulo “Sistema de Leitura de Hidrômetros”, identificação do leiturista e botão Iniciar Trabalho.
+- Tela de navegação com botões numerados das rotas, cada botão usando a cor própria da rota.
+- Ao selecionar uma rota, abrir o mapa e o painel inferior da rota.
+- O painel inferior apresenta nome da rota, progresso concluídos/total, barra de progresso e lista de ruas na ordem cadastrada.
+- Rua concluída fica visualmente marcada.
+- Ocorrências como Hidrômetro não visível ficam associadas à rua/leitura.
+- O mapa ocupa a área superior e acompanha a posição atual do leiturista.
+- Controles do mapa usam ícones da biblioteca Lucide.
+
+### Tela de entrada
+
+1. Exibir a identidade OIO ONE.
+2. Exibir “Sistema de Leitura de Hidrômetros”.
+3. Exibir o usuário/leiturista configurado.
+4. Botão principal Iniciar Trabalho.
+5. Ao tocar em Iniciar Trabalho, abrir a tela de seleção/navegação das rotas.
+6. Recuperar última rota e progresso local quando houver trabalho em andamento, sem apagar dados já registrados.
+
+### Seleção e navegação por rota
+
+- Permitir navegação direta pelas 20 rotas: ROTA 1 até ROTA 20.
+- Cada botão recebe a cor cadastrada para sua rota.
+- A rota selecionada fica visualmente destacada.
+- A troca de rota não apaga o progresso das demais.
+- Ao selecionar uma rota, carregar todas as ruas daquela rota na ordem cadastrada.
+- O contador representa o progresso real da rota, por exemplo 0/75, 1/11 ou 0/15.
+- A navegação deve funcionar por toque e ser adequada ao celular.
+
+### Mapa em tempo real
+
+- Mostrar a posição atual do leiturista por GPS.
+- Atualizar a posição enquanto o trabalho estiver ativo.
+- Desenhar a geometria da rota selecionada.
+- Destacar a rota selecionada com sua cor.
+- Permitir centralizar novamente a posição atual.
+- Manter os dados da rota disponíveis com conexão fraca e, quando possível, o mapa em cache.
+- Informar claramente quando GPS/localização estiver indisponível.
+- Não usar o GPS como substituto das coordenadas definitivas dos hidrômetros, que ainda precisam ser confirmadas.
+
+### Painel inferior da rota
+
+- Usar conceito de bottom sheet como nas telas de referência.
+- Alça visual para expandir/recolher.
+- Nome da rota em destaque usando a cor da rota.
+- Contador concluídos/total.
+- Barra de progresso.
+- Chevron para expandir/recolher.
+- Lista vertical de todas as ruas.
+- Cada rua deve ser uma linha de toque.
+- Preservar exatamente a ordem cadastrada.
+- Permitir usar o painel enquanto o mapa continua visível.
+
+### Eventos de campo e ícones Lucide
+
+| Evento | Descrição | Ícone Lucide sugerido |
+|---|---|---|
+| Iniciar trabalho | Inicia a jornada de leitura | Play |
+| Selecionar rota | Escolhe uma das 20 rotas | Route |
+| Localização atual | Mostra/centraliza a posição | MapPin |
+| Navegação | Orientação para o próximo ponto | Navigation |
+| Leitura registrada | Valor registrado | CircleCheck |
+| Hidrômetro não visível | Ponto não pôde ser lido | EyeOff |
+| Foto | Evidência fotográfica | Camera |
+| Vídeo | Evidência em vídeo | Video |
+| Observação | Informação adicional | MessageSquare |
+| Mapa | Visualização do mapa | Map |
+| GPS indisponível | Localização indisponível | MapPinOff |
+| Offline | Sem conexão | WifiOff |
+| Sincronização | Envio dos registros pendentes | RefreshCw |
+| Download/cache | Preparação para uso offline | Download |
+| Concluído | Item finalizado | CircleCheck |
+
+Os nomes acima são referências para a biblioteca Lucide Icons. A implementação deve usar os ícones oficiais da biblioteca, mantendo consistência visual e acessibilidade.
+
+### Registro de leitura
+
+1. Abrir o contexto da rua/hidrômetro.
+2. Mostrar identificador e endereço quando disponíveis.
+3. Permitir informar o valor da leitura.
+4. Permitir adicionar observação.
+5. Permitir registrar foto.
+6. Permitir registrar vídeo.
+7. Permitir marcar Hidrômetro não visível.
+8. Salvar imediatamente no armazenamento local.
+9. Atualizar o progresso da rota.
+10. Sincronizar com o servidor quando houver conexão.
+
+### Evidências de foto e vídeo
+
+Fotos e vídeos devem pertencer à leitura/evento correspondente, e não ficar soltos na galeria do aplicativo.
+
+Fluxo conceitual: ROTA → RUA → HIDRÔMETRO → LEITURA → valor + observação + foto(s) + vídeo(s).
+
+- Captura direta pelo celular.
+- Associação ao registro correto.
+- Permanência pendente quando offline.
+- Indicação clara do estado de sincronização.
+- Compressão/otimização conforme capacidade do aparelho.
+- A falta de internet não pode impedir a gravação da leitura.
+
+### Comportamento offline
+
+- Salvar a leitura localmente antes da sincronização.
+- Manter fotos e vídeos pendentes vinculados ao registro.
+- Informar estados Online, Offline e Sincronizando.
+- Sincronizar automaticamente ao recuperar conexão.
+- Evitar duplicação de leituras ou mídias em novas tentativas.
+- Permitir continuar trabalhando sem internet.
+
+### Controles flutuantes da referência
+
+- Botão de localização: MapPin ou LocateFixed.
+- Botão de download/cache: Download.
+- Futuros controles devem ser adicionados sem sobrecarregar o mapa.
+
+### Navegação completa
+
+TELA INICIAL → Iniciar Trabalho → SELEÇÃO DE ROTAS → ROTA 1 ... ROTA 20 → MAPA + PAINEL DA ROTA → lista de ruas → selecionar rua/hidrômetro → registrar leitura → valor/observação/foto/vídeo/hidrômetro não visível → salvar localmente → atualizar progresso → sincronizar.
+
+### Requisitos de UX derivados das telas
+
+- [ ] Reproduzir o conceito visual escuro/premium da referência.
+- [ ] Manter a cor da rota como elemento de identificação.
+- [ ] Manter navegação rápida pelas 20 rotas.
+- [ ] Mostrar todas as ruas da rota selecionada.
+- [ ] Manter progresso independente para cada rota.
+- [ ] Implementar bottom sheet responsivo.
+- [ ] Implementar mapa com posição GPS em tempo real.
+- [ ] Implementar controles flutuantes com Lucide.
+- [ ] Implementar estados visuais para concluído e ocorrência.
+- [ ] Implementar estados Online/Offline/Sincronizando.
+- [ ] Implementar leitura, observação, foto e vídeo.
+- [ ] Testar toda a navegação em tela de celular Android.
+
 ## Modelo de dados recomendado
 
 ~~~
