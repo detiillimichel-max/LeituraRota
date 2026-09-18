@@ -1,6 +1,16 @@
 (() => {
-  const DATA=window.LEITURAROTA_DATA;
-  const routes=DATA?.routes||[];
+  let DATA=window.LEITURAROTA_DATA;
+  let routes=DATA?.routes||[];
+  async function ensureRouteData(){
+    if(routes.length) return true;
+    return new Promise(resolve=>{
+      const s=document.createElement("script");
+      s.src="data/routes.js?v=2.0.1";
+      s.onload=()=>{DATA=window.LEITURAROTA_DATA;routes=DATA?.routes||[];resolve(routes.length>0)};
+      s.onerror=()=>resolve(false);
+      document.head.appendChild(s);
+    });
+  }
   if(!routes.length){
     document.addEventListener("DOMContentLoaded",()=>{
       const el=document.createElement("div");
@@ -47,5 +57,5 @@
   function setup(){renderRoutes();renderSheet();initMap();$("streetSearch").addEventListener("input",e=>{state.filter=e.target.value;renderStreets()});$("locateBtn").addEventListener("click",locateNow);$("sheetToggle").addEventListener("click",()=>{$("routeSheet").classList.toggle("sheet-collapsed");state.sheetOpen=!$("routeSheet").classList.contains("sheet-collapsed");$("sheetToggle").innerHTML=icon(state.sheetOpen?"chevron-down":"chevron-up");drawIcons()});$("menuOpen").addEventListener("click",()=>{ $("sidebar").classList.add("open");$("overlay").classList.add("show")});$("menuClose").addEventListener("click",closeMenu);$("overlay").addEventListener("click",closeMenu);$("downloadBtn").addEventListener("click",()=>toast("Dados das rotas já estão no dispositivo"));$("photoInput").addEventListener("change",e=>e.target.files[0]&&saveMedia("photo",e.target.files[0]));$("videoInput").addEventListener("change",e=>e.target.files[0]&&saveMedia("video",e.target.files[0]));window.addEventListener("online",updateNetwork);window.addEventListener("offline",updateNetwork);updateNetwork();if("serviceWorker" in navigator)navigator.serviceWorker.register("service-worker.js").catch(()=>{});drawIcons()}
   function closeMenu(){$("sidebar").classList.remove("open");$("overlay").classList.remove("show")}
   function updateNetwork(){const online=navigator.onLine;$("networkBadge").innerHTML=icon(online?"wifi":"wifi-off")+" "+(online?"ONLINE":"OFFLINE");$("networkBadge").style.color=online?"#4ade80":"#facc15";drawIcons()}
-  openDB().then(setup).catch(()=>{toast("Armazenamento local indisponível");setup()});
+  openDB().then(async()=>{const ok=await ensureRouteData();if(!ok){toast("Dados das rotas não carregaram");return}setup()}).catch(async()=>{const ok=await ensureRouteData();if(!ok){toast("Dados das rotas não carregaram");return}setup()});
 })();
