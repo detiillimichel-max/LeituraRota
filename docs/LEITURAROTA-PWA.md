@@ -284,6 +284,83 @@ TELA INICIAL → Iniciar Trabalho → SELEÇÃO DE ROTAS → ROTA 1 ... ROTA 20 
 - [ ] Implementar leitura, observação, foto e vídeo.
 - [ ] Testar toda a navegação em tela de celular Android.
 
+
+## Implementação inicial — Fase 1
+
+### Decisões técnicas
+
+- **Mapa:** Leaflet 1.9.4.
+- **Cartografia:** OpenStreetMap Standard, com atribuição visível.
+- **API de localização:** Geolocation API do navegador, usando GPS em tempo real.
+- **Chave de API do mapa:** não usar API Key nesta primeira fase. Isso evita repetir o problema da tela preta causada por serviço de mapas que exige chave.
+- **Traçado das rotas:** coordenadas da memória A, marcadas como provisórias até validação em campo.
+- **Dados das 20 rotas:** arquivo local `data/routes.js`.
+- **Persistência de campo:** IndexedDB no navegador para leituras e mídias.
+- **Progresso:** localStorage + IndexedDB.
+- **Ícones:** Lucide Icons.
+- **Arquitetura:** HTML + CSS + JavaScript puro, adequada para GitHub Pages e uso direto no celular.
+
+### Implementado
+
+- [x] Tela base OIO ONE.
+- [x] Navegação lateral pelas 20 rotas.
+- [x] Todas as ruas das 20 rotas carregadas no arquivo de dados.
+- [x] Seleção rápida de rota.
+- [x] Contador de endereços por rota.
+- [x] Progresso por rota.
+- [x] Mapa Leaflet.
+- [x] Traçado colorido da rota selecionada.
+- [x] GPS em tempo real pelo navegador.
+- [x] Botão de centralização/localização.
+- [x] Bottom sheet com ruas.
+- [x] Busca de endereço dentro da rota.
+- [x] Registro local de leitura.
+- [x] Ocorrência “Hidrômetro não visível”.
+- [x] Observação.
+- [x] Captura de foto pelo celular.
+- [x] Captura de vídeo pelo celular.
+- [x] Armazenamento local de fotos/vídeos no IndexedDB.
+- [x] Service Worker base para o shell local.
+- [x] Estado Online/Offline.
+
+### Ainda não implementado
+
+- [ ] Cadastro definitivo dos hidrômetros individuais.
+- [ ] Coordenadas individuais de cada hidrômetro.
+- [ ] Confirmação da memória de coordenadas definitiva.
+- [ ] Backend/API para sincronização dos registros.
+- [ ] Upload definitivo de fotos e vídeos.
+- [ ] Sincronização automática servidor ↔ aparelho.
+- [ ] Autenticação do leiturista.
+- [ ] Validação das 20 rotas em campo.
+- [ ] Mapa offline completo.
+
+### Banco de dados e mídias
+
+SQLite/PocketBase pode continuar sendo usado para **dados estruturados**, mas não será tratado como a única camada de armazenamento de fotos e vídeos.
+
+A primeira camada de campo usa **IndexedDB + Blob** no navegador. Assim, a captura pode continuar funcionando mesmo sem internet.
+
+Para a camada de servidor, a arquitetura prevista é:
+
+```
+PWA
+ ├── IndexedDB
+ │    ├── leituras
+ │    └── fotos/vídeos pendentes
+ │
+ └── API de sincronização
+       ├── banco SQL → rotas, ruas, hidrômetros, leituras
+       └── storage de objetos → fotos e vídeos
+```
+
+O storage de objetos será escolhido na próxima etapa, depois de definir o backend definitivo. Não colocar fotos/vídeos grandes diretamente nas tabelas SQL.
+
+### Observação sobre OpenStreetMap
+
+O mapa usa o serviço padrão do OpenStreetMap apenas para visualização interativa. A política atual do serviço exige atribuição visível e não permite pré-carregar/bulkar tiles para criar um mapa offline. Portanto, o botão de cache do PWA nesta fase **não baixa tiles do OpenStreetMap em massa**. Para mapa offline real, será necessário adotar posteriormente um provedor que permita esse uso ou hospedar a própria cartografia.
+
+
 ## Modelo de dados recomendado
 
 ~~~
