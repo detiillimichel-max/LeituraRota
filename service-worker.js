@@ -1,10 +1,10 @@
-const CACHE="leiturarota-shell-v3";
+const CACHE="leiturarota-shell-v4";
 const PRECACHE=[
   "/LeituraRota/",
   "/LeituraRota/index.html",
   "/LeituraRota/style.css",
   "/LeituraRota/app.js",
-  "/LeituraRota/data/routes.js",
+  "/LeituraRota/routes.js",
   "/LeituraRota/manifest.json"
 ];
 
