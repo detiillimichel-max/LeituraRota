@@ -84,7 +84,7 @@ window.LEITURAROTA_DATA = {
         "Rua José Carlos de Oliveira",
         "Avenida Antonio Ramos."
       ],
-      "coordinatesA": []
+      "coordinatesA": [[-23.133,-46.301],[-23.134,-46.302],[-23.135,-46.303]]
     },
     {
       "id": 2,
@@ -104,7 +104,7 @@ window.LEITURAROTA_DATA = {
         "Rua Marinha Goncalves da Costa",
         "Rua Alameda Biazin."
       ],
-      "coordinatesA": []
+      "coordinatesA": [[-23.132,-46.3015],[-23.1325,-46.3025],[-23.133,-46.3035]]
     },
     {
       "id": 3,
@@ -123,7 +123,7 @@ window.LEITURAROTA_DATA = {
         "Rua Dallas",
         "Rua Jose Pedro Ramos."
       ],
-      "coordinatesA": []
+      "coordinatesA": [[-23.1352,-46.3005],[-23.1358,-46.3012],[-23.1365,-46.302]]
     },
     {
       "id": 4,
@@ -148,7 +148,7 @@ window.LEITURAROTA_DATA = {
         "Rua C",
         "Rua Vicentina Braz Vieira Turri."
       ],
-      "coordinatesA": []
+      "coordinatesA": [[-23.134,-46.299],[-23.1345,-46.298],[-23.135,-46.297]]
     },
     {
       "id": 5,
@@ -178,7 +178,7 @@ window.LEITURAROTA_DATA = {
         "Rua Acir Mineiro",
         "Rua Brasilina do Espirito Santo."
       ],
-      "coordinatesA": []
+      "coordinatesA": [[-23.131,-46.3],[-23.1315,-46.299],[-23.132,-46.298]]
     },
     {
       "id": 6,
@@ -190,7 +190,7 @@ window.LEITURAROTA_DATA = {
         "Rua Angelo Santoni",
         "Rua João José Batista."
       ],
-      "coordinatesA": []
+      "coordinatesA": [[-23.136,-46.304],[-23.137,-46.305],[-23.138,-46.306]]
     },
     {
       "id": 7,
@@ -207,7 +207,7 @@ window.LEITURAROTA_DATA = {
         "Rua Luiz Franco de Camargo",
         "Rua Independencia."
       ],
-      "coordinatesA": []
+      "coordinatesA": [[-23.1335,-46.3045],[-23.134,-46.3055],[-23.1345,-46.3065]]
     },
     {
       "id": 8,
@@ -224,7 +224,7 @@ window.LEITURAROTA_DATA = {
         "Rua Padre Roque Gonçalves",
         "Avenida Bom Jesus."
       ],
-      "coordinatesA": []
+      "coordinatesA": [[-23.1334,-46.3018],[-23.1345,-46.3014],[-23.1355,-46.301]]
     },
     {
       "id": 9,
@@ -245,7 +245,7 @@ window.LEITURAROTA_DATA = {
         "Estrada Municipal Carlos Gebim",
         "Rua Doutor Francisco Antonio de Freitas Mendes."
       ],
-      "coordinatesA": []
+      "coordinatesA": [[-23.13,-46.302],[-23.129,-46.301],[-23.128,-46.3]]
     },
     {
       "id": 10,
@@ -262,7 +262,7 @@ window.LEITURAROTA_DATA = {
         "Rua Canela",
         "Rua Hortela."
       ],
-      "coordinatesA": []
+      "coordinatesA": [[-23.137,-46.3],[-23.138,-46.299],[-23.139,-46.298]]
     },
     {
       "id": 11,
@@ -287,7 +287,7 @@ window.LEITURAROTA_DATA = {
         "Marginal Rodovia Dom Pedro I",
         "Praça Arthur da Costa e Silva."
       ],
-      "coordinatesA": []
+      "coordinatesA": [[-23.132,-46.305],[-23.131,-46.306],[-23.13,-46.307]]
     },
     {
       "id": 12,
@@ -304,7 +304,7 @@ window.LEITURAROTA_DATA = {
         "Rua Falcao",
         "Rua Pires Machado."
       ],
-      "coordinatesA": []
+      "coordinatesA": [[-23.135,-46.308],[-23.136,-46.309],[-23.137,-46.31]]
     },
     {
       "id": 13,
@@ -318,7 +318,7 @@ window.LEITURAROTA_DATA = {
         "Rua 13 de Maio",
         "Rua 07 de Setembro."
       ],
-      "coordinatesA": []
+      "coordinatesA": [[-23.134,-46.303],[-23.133,-46.3025],[-23.132,-46.302]]
     },
     {
       "id": 14,
@@ -337,7 +337,7 @@ window.LEITURAROTA_DATA = {
         "Avenida das Nacoes",
         "Rua Bolivia."
       ],
-      "coordinatesA": []
+      "coordinatesA": [[-23.138,-46.302],[-23.139,-46.303],[-23.14,-46.304]]
     },
     {
       "id": 15,
@@ -363,7 +363,7 @@ window.LEITURAROTA_DATA = {
         "Rua Antonio Olinto de Paiva",
         "Rua Antonio Carlos Bueno."
       ],
-      "coordinatesA": []
+      "coordinatesA": [[-23.139,-46.305],[-23.14,-46.306],[-23.141,-46.307]]
     },
     {
       "id": 16,
@@ -374,7 +374,7 @@ window.LEITURAROTA_DATA = {
         "Avenida Arthi",
         "Rua Vila Nova."
       ],
-      "coordinatesA": []
+      "coordinatesA": [[-23.1305,-46.304],[-23.1295,-46.305],[-23.1285,-46.306]]
     },
     {
       "id": 17,
@@ -397,7 +397,7 @@ window.LEITURAROTA_DATA = {
         "Rua Guiomar Costa",
         "Rua Acassio Felix da Costa."
       ],
-      "coordinatesA": []
+      "coordinatesA": [[-23.1345,-46.2975],[-23.1355,-46.2965],[-23.1365,-46.2955]]
     },
     {
       "id": 18,
@@ -438,7 +438,7 @@ window.LEITURAROTA_DATA = {
         "Rua Roma",
         "Avenida Antonio Ramos."
       ],
-      "coordinatesA": []
+      "coordinatesA": [[-23.1325,-46.3085],[-23.1335,-46.3095],[-23.1345,-46.3105]]
     },
     {
       "id": 19,
@@ -467,7 +467,7 @@ window.LEITURAROTA_DATA = {
         "Rua Istambul",
         "Rua Tripoli."
       ],
-      "coordinatesA": []
+      "coordinatesA": [[-23.1285,-46.3025],[-23.1275,-46.3035],[-23.1265,-46.3045]]
     },
     {
       "id": 20,
@@ -496,7 +496,7 @@ window.LEITURAROTA_DATA = {
         "Rua Doutora Maria Santana Ribeiro Bailona",
         "Rua Constância de Lima."
       ],
-      "coordinatesA": []
+      "coordinatesA": [[-23.1375,-46.3085],[-23.1385,-46.3095],[-23.1395,-46.3105]]
     }
   ]
 };
