@@ -187,6 +187,19 @@ readings
 - [ ] Confirmar armazenamento e sincronização
 - [ ] Testar offline
 - [ ] Validar todas as 20 rotas em campo
+- [ ] Adicionar registro de fotos por hidrômetro
+- [ ] Adicionar registro de vídeos por hidrômetro
+- [ ] Permitir tirar foto diretamente pela câmera do celular
+- [ ] Permitir gravar vídeo diretamente pelo celular
+- [ ] Associar fotos e vídeos à leitura correspondente
+- [ ] Armazenar mídias temporariamente offline
+- [ ] Sincronizar fotos e vídeos quando houver internet
+- [ ] Manter indicação de mídias pendentes de sincronização
+- [ ] Evitar perda de fotos/vídeos quando a conexão cair
+- [ ] Definir limite/tamanho e compressão das mídias
+- [ ] Definir armazenamento definitivo das mídias
+- [ ] Testar captura de mídia no Android
+- [ ] Testar sincronização de mídia em conexão fraca
 
 ## Próxima etapa
 
