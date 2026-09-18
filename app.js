@@ -1,5 +1,14 @@
 (() => {
-  const DATA=window.LEITURAROTA_DATA;const routes=DATA.routes;
+  const DATA=window.LEITURAROTA_DATA;
+  const routes=DATA?.routes||[];
+  if(!routes.length){
+    document.addEventListener("DOMContentLoaded",()=>{
+      const el=document.createElement("div");
+      el.style.cssText="position:fixed;inset:70px 16px auto;z-index:3000;background:#1b2029;color:#fff;padding:14px;border:1px solid #ef4444;border-radius:12px;font:12px system-ui";
+      el.textContent="Não foi possível carregar data/routes.js. Recarregue a página e verifique o caminho do GitHub Pages.";
+      document.body.appendChild(el);
+    });
+  }
   const state={routeId:Number(localStorage.getItem("lr-route")||1),filter:"",sheetOpen:true,selectedStreet:0,watching:false};
   let map,routeLine,userMarker,accuracyCircle,watchId,db;
   const $=id=>document.getElementById(id);
@@ -15,8 +24,16 @@
   async function getReading(id){return new Promise((resolve,reject)=>{const r=tx("readings").get(id);r.onsuccess=()=>resolve(r.result||null);r.onerror=()=>reject(r.error)})}
   async function saveReading(route,idx,data){const id=route.id+"-"+idx;const old=await getReading(id)||{};await put("readings",{id,routeId:route.id,streetIndex:idx,street:route.streets[idx],updatedAt:new Date().toISOString(),...old,...data});}
   async function countSaved(routeId){return (await readAll("readings")).filter(x=>x.routeId===routeId&&x.saved).length}
-  function renderRoutes(){const list=$("routeList");list.innerHTML=routes.map(r=>{const saved=localStorage.getItem("lr-progress-"+r.id)||"0";return '<button class="route-item '+(r.id===state.routeId?"active":"")+'" data-route="'+r.id+'"><span class="route-dot" style="background:'+r.color+'"></span><span class="route-copy"><strong>'+r.name+'</strong><span>'+r.streets.length+' endereços · '+saved+' salvos</span></span><span class="route-progress">'+saved+'/'+r.streets.length+'</span></button>'}).join("");list.querySelectorAll("[data-route]").forEach(b=>b.addEventListener("click",()=>selectRoute(Number(b.dataset.route))));drawIcons()}
-  async function selectRoute(id){state.routeId=id;state.filter="";$("streetSearch").value="";localStorage.setItem("lr-route",id);renderRoutes();renderSheet();drawRoute();closeMenu()}
+  function renderRoutes(){
+    const list=$("routeList");
+    list.innerHTML=routes.map(r=>{const saved=localStorage.getItem("lr-progress-"+r.id)||"0";return '<button class="route-item '+(r.id===state.routeId?"active":"")+'" data-route="'+r.id+'"><span class="route-dot" style="background:'+r.color+'"></span><span class="route-copy"><strong>'+r.name+'</strong><span>'+r.streets.length+' endereços · '+saved+' salvos</span></span><span class="route-progress">'+saved+'/'+r.streets.length+'</span></button>'}).join("");
+    list.querySelectorAll("[data-route]").forEach(b=>b.addEventListener("click",()=>selectRoute(Number(b.dataset.route))));
+    const nav=$("routeNav");
+    if(nav) nav.innerHTML=routes.map(r=>'<button class="route-nav-btn '+(r.id===state.routeId?"active":"")+'" data-route-nav="'+r.id+'" style="--route-color:'+r.color+'" aria-label="Selecionar '+r.name+'"><span class="route-nav-dot" style="background:'+r.color+'"></span>'+r.id+'</button>').join("");
+    nav?.querySelectorAll("[data-route-nav]").forEach(b=>b.addEventListener("click",()=>selectRoute(Number(b.dataset.routeNav))));
+    drawIcons();
+  }
+  async function selectRoute(id){if(!routes.some(r=>r.id===id))return;state.routeId=id;state.filter="";$("streetSearch").value="";localStorage.setItem("lr-route",id);renderRoutes();renderSheet();drawRoute();closeMenu();$("routeNav")?.querySelector('[data-route-nav="'+id+'"]')?.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"})}
   function renderSheet(){const r=currentRoute();$("topRouteName").textContent=r.name;$("topRouteMeta").textContent=r.streets.length+" endereços";$("sheetRouteName").textContent=r.name;$("sheetRouteName").style.color=r.color;renderStreets();updateProgress();drawIcons()}
   async function renderStreets(){const r=currentRoute(),q=state.filter.toLowerCase();const saved=await readAll("readings");const byId=new Map(saved.map(x=>[x.id,x]));const items=r.streets.map((street,i)=>({street,i,data:byId.get(r.id+"-"+i)})).filter(x=>x.street.toLowerCase().includes(q));$("streetGrid").innerHTML=items.map(({street,i,data})=>{const done=!!data?.saved;return '<article class="street-card '+(done?"done":"")+'" style="--route-color:'+r.color+'" data-street="'+i+'"><div class="street-title">'+(i+1)+". "+esc(street)+'</div><label class="field-label">Leitura / hidrômetro</label><input class="field reading" inputmode="decimal" value="'+esc(data?.value||"")+'" placeholder="Digite a leitura, hidrômetro, número..."><label class="field-label">Ocorrências</label><select class="select occurrence"><option value="">Sem ocorrência</option><option value="Hidrômetro não visível" '+(data?.occurrence==="Hidrômetro não visível"?"selected":"")+'>Hidrômetro não visível</option><option value="Imóvel fechado" '+(data?.occurrence==="Imóvel fechado"?"selected":"")+'>Imóvel fechado</option><option value="Número errado" '+(data?.occurrence==="Número errado"?"selected":"")+'>Número errado</option><option value="Leitura impossível" '+(data?.occurrence==="Leitura impossível"?"selected":"")+'>Leitura impossível</option></select><label class="field-label">Observação</label><textarea class="textarea note" placeholder="Observação do campo...">'+esc(data?.note||"")+'</textarea><div class="card-actions"><button class="small-btn photo" title="Foto">'+icon("camera")+" Foto</button><button class="small-btn video" title="Vídeo">'+icon("video")+" Vídeo</button><button class="small-btn primary save" title="Salvar">'+icon(done?"circle-check":"save")+" "+(done?"Salvo":"Salvar")+"</button></div></article>"}).join("");$("streetGrid").querySelectorAll(".street-card").forEach(card=>{const i=Number(card.dataset.street);card.querySelector(".save").addEventListener("click",()=>saveCard(card,i));card.querySelector(".photo").addEventListener("click",()=>capture("photo",i));card.querySelector(".video").addEventListener("click",()=>capture("video",i))});drawIcons()}
   async function saveCard(card,i){const r=currentRoute();await saveReading(r,i,{value:card.querySelector(".reading").value,note:card.querySelector(".note").value,occurrence:card.querySelector(".occurrence").value,saved:true});const count=await countSaved(r.id);localStorage.setItem("lr-progress-"+r.id,count);toast("Leitura salva localmente");renderRoutes();renderStreets();updateProgress()}
